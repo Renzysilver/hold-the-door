@@ -677,8 +677,8 @@ io.on('connection', (socket) => {
       socket.emit('error-message', { message: 'Only the host can start the game.' })
       return
     }
-    if (game.players.length < 2) {
-      socket.emit('error-message', { message: 'Need at least 2 players to start.' })
+    if (game.players.length < 1) {
+      socket.emit('error-message', { message: 'Need at least 1 player to start.' })
       return
     }
 

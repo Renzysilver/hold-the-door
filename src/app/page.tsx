@@ -279,7 +279,7 @@ export default function HoldTheDoor() {
                 {myPlayer?.isHost && (
                   <Button
                     onClick={handleStartGame}
-                    disabled={!gameState || gameState.players.length < 2}
+                    disabled={!gameState || gameState.players.length < 1}
                     className="w-full bg-green-900/30 hover:bg-green-800/40 text-green-300 font-mono border border-green-800/40"
                   >
                     ▶ START GAME ({gameState?.players.length || 0}/4)
@@ -292,7 +292,7 @@ export default function HoldTheDoor() {
                   </div>
                 )}
 
-                {gameState && gameState.players.length < 2 && (
+                {gameState && gameState.players.length < 1 && (
                   <p className="text-xs font-mono text-amber-400/50 text-center mt-2">
                     Need at least 2 players to start
                   </p>
