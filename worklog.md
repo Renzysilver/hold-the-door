@@ -31,3 +31,22 @@ Stage Summary:
 - Complete working multiplayer game prototype built
 - 8 rooms, 4 roles, 4 puzzle types, AI dialogue, sacrifice mechanic, station log generator
 - Dark space theme with cyan accents, terminal-style AI text, Canvas rendering
+
+---
+Task ID: 3
+Agent: Main Agent
+Task: Add README with Linux run guide and push to GitHub
+
+Work Log:
+- Created comprehensive README.md with game overview, tech stack, quick start for Linux, production build, project structure, Socket.io API reference, and remote server deployment guide
+- Updated .gitignore for cleaner repo (removed agent-specific entries, added proper patterns)
+- Created push-to-github.sh helper script for automated GitHub repo creation and push
+- Committed all changes to git (3 commits total on main branch)
+- Attempted to install GitHub CLI (gh) - downloaded binary v2.67.0 but no auth token available in environment
+- Cannot push to GitHub without user credentials - provided script for user to push from their machine
+
+Stage Summary:
+- README.md with full Linux setup guide created
+- Push-to-github.sh script created for easy one-command push
+- User needs to run: bash push-to-github.sh hold-the-door THEIR_GITHUB_USERNAME
+- Or manually: git remote add origin git@github.com:USER/hold-the-door.git && git push -u origin main
