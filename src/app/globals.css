@@ -41,6 +41,30 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --animate-glitch: glitch 0.3s infinite;
+  --animate-scanline-move: scanline-move 8s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-pulse-red: pulse-red 1.5s ease-in-out infinite;
+  --animate-pulse-cyan: pulse-cyan 2s ease-in-out infinite;
+  --animate-pulse-amber: pulse-amber 2s ease-in-out infinite;
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-dissolve: dissolve 1.5s ease-out forwards;
+  --animate-slide-in-right: slide-in-right 0.3s ease-out;
+  --animate-slide-in-up: slide-in-up 0.3s ease-out;
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-blink: blink 1s step-end infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-starfield: starfield 120s linear infinite;
+  --animate-urgency-pulse: urgency-pulse 1s ease-in-out infinite;
+  --animate-cursor-blink: cursor-blink 1s step-end infinite;
+  --animate-flicker: flicker 0.15s infinite;
+  --animate-rise-up: rise-up 3s ease-out infinite;
+  --animate-darken: darken 5s ease-out forwards;
+  --animate-vote-save-glow: vote-save-glow 2s ease-in-out infinite;
+  --animate-vote-sacrifice-glow: vote-sacrifice-glow 2s ease-in-out infinite;
+  --animate-typing-cursor: typing-cursor 0.7s step-end infinite;
+  --animate-ambient-drift: ambient-drift 20s ease-in-out infinite;
 }
 
 :root {
@@ -121,7 +145,9 @@
   }
 }
 
-/* Custom scrollbar for game UI */
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
 .game-scroll::-webkit-scrollbar {
   width: 4px;
 }
@@ -136,16 +162,35 @@
   background: rgba(0, 212, 255, 0.4);
 }
 
-/* Glow text effect for titles */
+/* ============================================
+   GLOW TEXT EFFECTS
+   ============================================ */
 .text-glow-cyan {
-  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.2);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.2), 0 0 40px rgba(0, 212, 255, 0.1);
 }
 
 .text-glow-red {
-  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.2);
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.2), 0 0 40px rgba(239, 68, 68, 0.1);
 }
 
-/* Scanline overlay effect */
+.text-glow-green {
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.5), 0 0 20px rgba(34, 197, 94, 0.2), 0 0 40px rgba(34, 197, 94, 0.1);
+}
+
+.text-glow-amber {
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.5), 0 0 20px rgba(245, 158, 11, 0.2), 0 0 40px rgba(245, 158, 11, 0.1);
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.15);
+}
+
+/* ============================================
+   SCANLINE OVERLAY
+   ============================================ */
+.scanline-overlay {
+  position: relative;
+}
 .scanline-overlay::after {
   content: '';
   position: absolute;
@@ -161,11 +206,673 @@
   z-index: 1;
 }
 
-/* Pulse animation for active sectors */
+/* Moving scanline beam */
+.scanline-beam::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.03) 50%,
+    transparent 100%
+  );
+  background-size: 100% 30%;
+  animation: scanline-move 8s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ============================================
+   VIGNETTE OVERLAY
+   ============================================ */
+.vignette {
+  box-shadow: inset 0 0 120px 40px rgba(0, 0, 0, 0.7);
+}
+
+.vignette-light {
+  box-shadow: inset 0 0 80px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+/* Glitch effect for title text */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes glitch-clip {
+  0% { clip-path: inset(40% 0 61% 0); }
+  20% { clip-path: inset(92% 0 1% 0); }
+  40% { clip-path: inset(43% 0 1% 0); }
+  60% { clip-path: inset(25% 0 58% 0); }
+  80% { clip-path: inset(54% 0 7% 0); }
+  100% { clip-path: inset(58% 0 43% 0); }
+}
+
+/* Scanline beam moving */
+@keyframes scanline-move {
+  0% { background-position: 0 -100%; }
+  100% { background-position: 0 200%; }
+}
+
+/* Float animation for particles */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-8px) translateX(4px); }
+  50% { transform: translateY(-4px) translateX(-4px); }
+  75% { transform: translateY(-12px) translateX(2px); }
+}
+
+/* Pulse glow */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Red pulse for danger */
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.2), inset 0 0 5px rgba(239, 68, 68, 0.05); }
+  50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.5), inset 0 0 15px rgba(239, 68, 68, 0.1); }
+}
+
+/* Cyan pulse for hold phase */
+@keyframes pulse-cyan {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.2), inset 0 0 5px rgba(0, 212, 255, 0.05); }
+  50% { box-shadow: 0 0 25px rgba(0, 212, 255, 0.5), inset 0 0 15px rgba(0, 212, 255, 0.1); }
+}
+
+/* Amber pulse for escape/decide phase */
+@keyframes pulse-amber {
+  0%, 100% { box-shadow: 0 0 5px rgba(245, 158, 11, 0.2), inset 0 0 5px rgba(245, 158, 11, 0.05); }
+  50% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), inset 0 0 15px rgba(245, 158, 11, 0.1); }
+}
+
+/* Screen shake */
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-4px, -2px); }
+  20% { transform: translate(4px, 2px); }
+  30% { transform: translate(-2px, 4px); }
+  40% { transform: translate(2px, -4px); }
+  50% { transform: translate(-4px, 2px); }
+  60% { transform: translate(4px, -2px); }
+  70% { transform: translate(-2px, -4px); }
+  80% { transform: translate(2px, 4px); }
+  90% { transform: translate(-4px, -2px); }
+}
+
+/* Dissolve effect for sacrificed rooms */
+@keyframes dissolve {
+  0% { opacity: 1; filter: blur(0px) grayscale(0%); }
+  50% { opacity: 0.5; filter: blur(2px) grayscale(50%); }
+  100% { opacity: 0.15; filter: blur(4px) grayscale(100%); }
+}
+
+/* Slide in from right */
+@keyframes slide-in-right {
+  0% { transform: translateX(20px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Slide in from bottom */
+@keyframes slide-in-up {
+  0% { transform: translateY(16px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Fade in */
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Blink for terminal cursor */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Shimmer for progress bars */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Starfield rotation */
+@keyframes starfield {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Urgency pulse for scramble / low timer */
+@keyframes urgency-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.3; }
+}
+
+/* Typing cursor blink */
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Flicker for red alert / desperation */
+@keyframes flicker {
+  0% { opacity: 1; }
+  25% { opacity: 0.8; }
+  50% { opacity: 1; }
+  75% { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+
+/* Rise up for victory particles */
+@keyframes rise-up {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-80px) scale(0.5); opacity: 0; }
+}
+
+/* Darken for defeat */
+@keyframes darken {
+  0% { opacity: 0; }
+  100% { opacity: 0.7; }
+}
+
+/* Vote screen glows */
+@keyframes vote-save-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(34, 197, 94, 0.2), inset 0 0 15px rgba(34, 197, 94, 0.05); }
+  50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.5), inset 0 0 30px rgba(34, 197, 94, 0.15); }
+}
+
+@keyframes vote-sacrifice-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.2), inset 0 0 15px rgba(239, 68, 68, 0.05); }
+  50% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.5), inset 0 0 30px rgba(239, 68, 68, 0.15); }
+}
+
+/* Ambient drifting particles */
+@keyframes ambient-drift {
+  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+  25% { transform: translate(10px, -15px); opacity: 0.6; }
+  50% { transform: translate(-5px, -30px); opacity: 0.3; }
+  75% { transform: translate(15px, -10px); opacity: 0.5; }
+}
+
+/* Sector pulse */
 @keyframes sector-pulse {
   0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.3); }
   50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.6); }
 }
+
+/* Connection pulse */
+@keyframes connection-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
 .sector-pulse {
   animation: sector-pulse 2s ease-in-out infinite;
+}
+
+.shimmer-bar {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.3) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+.shimmer-bar-green {
+  background: linear-gradient(
+    90deg,
+    rgba(34, 197, 94, 0.4) 0%,
+    rgba(34, 197, 94, 0.7) 50%,
+    rgba(34, 197, 94, 0.4) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+.shimmer-bar-red {
+  background: linear-gradient(
+    90deg,
+    rgba(239, 68, 68, 0.4) 0%,
+    rgba(239, 68, 68, 0.7) 50%,
+    rgba(239, 68, 68, 0.4) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Phase border effects */
+.scramble-border {
+  border: 2px solid rgba(239, 68, 68, 0.4);
+  animation: pulse-red 1.5s ease-in-out infinite;
+}
+
+.hold-border {
+  border: 2px solid rgba(0, 212, 255, 0.4);
+  animation: pulse-cyan 2s ease-in-out infinite;
+}
+
+.escape-border {
+  border: 2px solid rgba(245, 158, 11, 0.4);
+  animation: pulse-amber 2s ease-in-out infinite;
+}
+
+/* Damage shake */
+.screen-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Dissolve for sacrificed rooms */
+.dissolve-effect {
+  animation: dissolve 1.5s ease-out forwards;
+}
+
+/* Starfield background */
+.starfield-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.starfield-bg .star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ============================================
+   AMBIENT PARTICLES (CSS-only floating dust)
+   ============================================ */
+.ambient-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-particles .dust {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(0, 212, 255, 0.3);
+  border-radius: 50%;
+  animation: ambient-drift 20s ease-in-out infinite;
+}
+
+/* Generate 20 dust particles via nth-child */
+.ambient-particles .dust:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 18s; }
+.ambient-particles .dust:nth-child(2) { left: 20%; top: 60%; animation-delay: -3s; animation-duration: 22s; width: 3px; height: 3px; }
+.ambient-particles .dust:nth-child(3) { left: 35%; top: 40%; animation-delay: -5s; animation-duration: 16s; }
+.ambient-particles .dust:nth-child(4) { left: 50%; top: 80%; animation-delay: -7s; animation-duration: 24s; width: 1px; height: 1px; }
+.ambient-particles .dust:nth-child(5) { left: 65%; top: 30%; animation-delay: -2s; animation-duration: 20s; }
+.ambient-particles .dust:nth-child(6) { left: 80%; top: 70%; animation-delay: -9s; animation-duration: 19s; width: 3px; height: 3px; }
+.ambient-particles .dust:nth-child(7) { left: 15%; top: 90%; animation-delay: -4s; animation-duration: 21s; }
+.ambient-particles .dust:nth-child(8) { left: 45%; top: 15%; animation-delay: -6s; animation-duration: 17s; width: 1px; height: 1px; }
+.ambient-particles .dust:nth-child(9) { left: 70%; top: 50%; animation-delay: -8s; animation-duration: 23s; }
+.ambient-particles .dust:nth-child(10) { left: 90%; top: 10%; animation-delay: -1s; animation-duration: 25s; width: 2px; height: 2px; }
+.ambient-particles .dust:nth-child(11) { left: 5%; top: 45%; animation-delay: -11s; animation-duration: 18s; }
+.ambient-particles .dust:nth-child(12) { left: 30%; top: 75%; animation-delay: -13s; animation-duration: 22s; width: 3px; height: 3px; }
+.ambient-particles .dust:nth-child(13) { left: 55%; top: 5%; animation-delay: -15s; animation-duration: 16s; }
+.ambient-particles .dust:nth-child(14) { left: 75%; top: 95%; animation-delay: -17s; animation-duration: 24s; width: 1px; height: 1px; }
+.ambient-particles .dust:nth-child(15) { left: 85%; top: 35%; animation-delay: -19s; animation-duration: 20s; }
+.ambient-particles .dust:nth-child(16) { left: 40%; top: 55%; animation-delay: -21s; animation-duration: 19s; width: 2px; height: 2px; }
+.ambient-particles .dust:nth-child(17) { left: 60%; top: 25%; animation-delay: -23s; animation-duration: 21s; }
+.ambient-particles .dust:nth-child(18) { left: 25%; top: 85%; animation-delay: -25s; animation-duration: 17s; width: 1px; height: 1px; }
+.ambient-particles .dust:nth-child(19) { left: 95%; top: 65%; animation-delay: -27s; animation-duration: 23s; }
+.ambient-particles .dust:nth-child(20) { left: 12%; top: 50%; animation-delay: -29s; animation-duration: 25s; width: 2px; height: 2px; }
+
+/* ============================================
+   GLITCH TITLE TEXT
+   ============================================ */
+.glitch-title {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-title::before,
+.glitch-title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-title::before {
+  color: rgba(0, 212, 255, 0.8);
+  animation: glitch-clip 3s infinite linear alternate-reverse;
+  left: 2px;
+}
+
+.glitch-title::after {
+  color: rgba(239, 68, 68, 0.8);
+  animation: glitch-clip 2s infinite linear alternate;
+  left: -2px;
+}
+
+/* ============================================
+   SOUND WAVE / PULSE AROUND TITLE
+   ============================================ */
+.sound-pulse {
+  position: relative;
+}
+
+.sound-pulse::before,
+.sound-pulse::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  animation: sound-wave 3s ease-out infinite;
+}
+
+.sound-pulse::before {
+  width: 120%;
+  height: 200%;
+}
+
+.sound-pulse::after {
+  width: 140%;
+  height: 240%;
+  animation-delay: 1s;
+}
+
+@keyframes sound-wave {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.3); opacity: 0; }
+}
+
+/* ============================================
+   MOBILE-OPTIMIZED TOUCH TARGETS
+   ============================================ */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   PHASE OVERLAY EFFECTS
+   ============================================ */
+.phase-overlay-scramble {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  border: 3px solid rgba(239, 68, 68, 0.3);
+  animation: urgency-pulse 1.5s ease-in-out infinite;
+}
+
+.phase-overlay-hold {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  border: 2px solid rgba(0, 212, 255, 0.15);
+  box-shadow: inset 0 0 60px rgba(0, 212, 255, 0.05);
+}
+
+.phase-overlay-escape {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  border: 2px solid rgba(245, 158, 11, 0.2);
+  animation: urgency-pulse 2.5s ease-in-out infinite;
+}
+
+/* ============================================
+   TERMINAL / LOG STYLING
+   ============================================ */
+.terminal-text {
+  font-family: 'Geist Mono', monospace;
+  line-height: 1.6;
+  color: rgba(0, 212, 255, 0.8);
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: rgba(0, 212, 255, 0.8);
+  animation: cursor-blink 0.7s step-end infinite;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+}
+
+/* ============================================
+   TOAST / NOTIFICATION STYLING
+   ============================================ */
+.space-toast {
+  background: linear-gradient(135deg, rgba(13, 18, 32, 0.95), rgba(10, 14, 23, 0.95));
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-left: 3px solid rgba(0, 212, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.1), 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  animation: slide-in-right 0.3s ease-out;
+}
+
+/* ============================================
+   AI EMOTIONAL STATE TINTS
+   ============================================ */
+.emotion-sad {
+  filter: hue-rotate(20deg) saturate(0.8);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), transparent);
+}
+
+.emotion-desperate {
+  animation: flicker 0.15s infinite;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), transparent);
+}
+
+.emotion-hopeful {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(34, 197, 94, 0.03));
+}
+
+.emotion-grateful {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(34, 197, 94, 0.03));
+}
+
+.emotion-confused {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), transparent);
+}
+
+/* ============================================
+   MOBILE BOTTOM PANEL STYLES
+   ============================================ */
+.mobile-panel {
+  background: linear-gradient(180deg, rgba(13, 18, 32, 0.98), rgba(10, 14, 23, 0.99));
+  border-top: 1px solid rgba(0, 212, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.mobile-tab {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-tab:active {
+  transform: scale(0.95);
+}
+
+.mobile-tab-active {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.3);
+  color: rgba(0, 212, 255, 0.9);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+}
+
+.mobile-tab-inactive {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(51, 65, 85, 0.3);
+  color: rgba(100, 116, 139, 0.8);
+}
+
+/* ============================================
+   GAME OVER EFFECTS
+   ============================================ */
+.victory-glow {
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.defeat-darken {
+  position: relative;
+}
+
+.defeat-darken::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: black;
+  animation: darken 5s ease-out forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ============================================
+   PROGRESS BAR ENHANCED
+   ============================================ */
+.progress-bar-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-glow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* ============================================
+   ROOM NAV BUTTON (MOBILE)
+   ============================================ */
+.room-nav-btn {
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.room-nav-btn:active {
+  transform: scale(0.92);
+}
+
+/* ============================================
+   PUZZLE TOUCH-FRIENDLY
+   ============================================ */
+.puzzle-btn {
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 14px;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.puzzle-btn:active {
+  transform: scale(0.92);
+  filter: brightness(1.3);
+}
+
+/* ============================================
+   RESPONSIVE CANVAS CONTAINER
+   ============================================ */
+.canvas-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+}
+
+@media (max-width: 767px) {
+  .canvas-container {
+    min-height: 240px;
+    max-height: 40vh;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .canvas-container {
+    min-height: 300px;
+    max-height: 50vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .canvas-container {
+    min-height: 400px;
+  }
+}
+
+/* ============================================
+   TYPEWRITER EFFECT FOR LOBBY DESCRIPTION
+   ============================================ */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid rgba(0, 212, 255, 0.6);
+  white-space: normal;
+  animation: cursor-blink 0.7s step-end infinite;
 }
