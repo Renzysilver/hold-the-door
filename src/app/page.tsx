@@ -41,7 +41,10 @@ export default function HoldTheDoor() {
 
   // Connect socket
   useEffect(() => {
-    const s = io('/?XTransformPort=3030', {
+    // Connect directly to game server on port 3030
+    // (Caddy proxy on port 81 is optional for production)
+    const gameServerUrl = process.env.NEXT_PUBLIC_GAME_SERVER_URL || 'http://localhost:3030'
+    const s = io(gameServerUrl, {
       transports: ['websocket', 'polling'],
       forceNew: true,
       reconnection: true,
